@@ -16,6 +16,7 @@ export default {
     Products
   },
   computed: {
+    // mapState selects a specific part of the state.
     ...mapState([
         'products'
     ]),

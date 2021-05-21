@@ -26,13 +26,41 @@ export default new Vuex.Store({
         img: '../assets/strawberry.jpg',
         price: 0.10
       },
-    ]
+    ],
+    cart: {
+      products: {}
+    }
   },
   mutations: {
+    productIncrement: (state, payload) => {
+      const dest = state.cart.products;
+      const product = payload;
+
+      if (!dest[product]) dest[product] = 0;
+      dest[product]++;
+    },
+    productDecrement: (state, payload) => {
+      const dest = state.cart.products;
+      const product = payload;
+
+      if (!dest[product]) dest[product] = 0;
+      if (dest[product] === 1) delete dest[product];
+      if (dest[product] > 0) dest[product]--;
+    },
+    productAmountByValue: (state, payload) => {
+      const dest = state.cart.products;
+      const product = payload.product;
+      const amount = payload.amount;
+
+      if (amount > 0) dest[product] = amount;
+      if (amount <= 0) delete dest[product];
+    }
   },
   actions: {
   },
   modules: {
+  },
+  getters: {
   }
 })
 

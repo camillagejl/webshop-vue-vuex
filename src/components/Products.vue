@@ -23,5 +23,9 @@ export default {
 </script>
 
 <style scoped>
-
+.products {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 16px;
+}
 </style>
