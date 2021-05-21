@@ -1,9 +1,10 @@
 <template>
   <div class="products">
-    <Product/>
-    <Product/>
-    <Product/>
-    <Product/>
+    <div v-for="product in products">
+      <Product
+          :product="product"
+      />
+    </div>
   </div>
 </template>
 
@@ -14,6 +15,9 @@ export default {
   name: "Products",
   components: {
     Product
+  },
+  props: {
+    products: Array
   }
 }
 </script>

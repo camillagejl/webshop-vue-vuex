@@ -1,10 +1,15 @@
 <template>
-  <h2>Product name</h2>
+  <div class="product">
+  {{ product.name }}
+  </div>
 </template>
 
 <script>
 export default {
-  name: "Product"
+  name: "Product",
+  props: {
+    product: Object
+  }
 }
 </script>
 
