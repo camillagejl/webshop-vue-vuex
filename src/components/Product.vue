@@ -25,7 +25,7 @@
             <input
                 type="text"
                 name="productAmount"
-                value="0"
+                :value="parseInt(cart.products[product.name]) || 0"
                 @change="updateAmount"
             />
             <button
@@ -43,17 +43,38 @@
 </template>
 
 <script>
-import {mapMutations} from "vuex";
+import {mapMutations, mapState} from "vuex";
 
 export default {
   name: "Product",
   props: {
-    product: Object
+    product: Object,
+    productAmount: Number
   },
   computed: {
+      // mapState selects a specific part of the state.
+      ...mapState([
+        'cart'
+      ]),
     priceFixed() {
       // The price is taken from the product prop, but "beautified" here to have two decimals.
       return (Math.round((this.product.price) * 100) / 100).toFixed(2);
+    },
+    computedProductAmount: {
+      get() {
+        return parseInt(this.cart.products[this.product.name]) || 0;
+      },
+      set(input) {
+        let newAmount = parseInt(input);
+        if (isNaN(newAmount)) newAmount = 0;
+
+        this.$store.commit(
+            'productAmountByValue',
+            {
+              product: this.product.name,
+              amount: newAmount
+        })
+      }
     }
   },
   methods: {
@@ -71,12 +92,50 @@ export default {
 
       // Dispatches the reducer with the product and the new amount.
       // dispatch(productAmountByValue({product: product.name, amount: newAmount}))
+
       console.log(newAmount);
+
+      this.$store.commit(
+          'productAmountByValue',
+          {
+            product: this.product.name,
+            amount: newAmount
+          })
     }
   }
 }
 </script>
 
 <style scoped>
+.product {
+  height: 100%;
+  box-sizing: border-box;
+  background-color: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
+.productTitle {
+  font-size: 24px;
+  font-weight: normal;
+  margin: 0;
+}
+
+.productImage img {
+  max-width: 100%;
+  box-sizing: border-box;
+
+}
+
+.productAmountInput {
+  display: flex;
+}
+
+.productAmountInput input {
+  display: inline-block;
+  margin: 0 8px;
+}
 </style>

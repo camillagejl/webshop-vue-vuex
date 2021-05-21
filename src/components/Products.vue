@@ -3,13 +3,21 @@
     <div v-for="product in products">
       <Product
           :product="product"
+          :productAmount="cart.products[product.name] || 0"
       />
+
+      <div
+      v-if="!products || products.length === 0"
+      >
+       No products
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import Product from "./Product";
+import {mapState} from "vuex";
 
 export default {
   name: "Products",
@@ -18,6 +26,12 @@ export default {
   },
   props: {
     products: Array
+  },
+  computed: {
+    // mapState selects a specific part of the state.
+    ...mapState([
+      'cart'
+    ]),
   }
 }
 </script>

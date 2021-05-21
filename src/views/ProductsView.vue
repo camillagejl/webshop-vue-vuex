@@ -1,8 +1,13 @@
 <template>
   <div class="productsView">
-      <Products
-          :products="products"
-      />
+
+    <h1>
+      Products
+    </h1>
+
+    <Products
+        :products="products"
+    />
   </div>
 </template>
 
@@ -18,7 +23,7 @@ export default {
   computed: {
     // mapState selects a specific part of the state.
     ...mapState([
-        'products'
+      'products'
     ]),
   }
 }

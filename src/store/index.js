@@ -1,5 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import appleImg from '../assets/apple.jpg';
+import orangeImg from '../assets/orange.jpg';
+import pearImg from '../assets/pear.jpg';
+import strawberryImg from '../assets/strawberry.jpg';
 
 Vue.use(Vuex)
 
@@ -8,27 +12,28 @@ export default new Vuex.Store({
     products: [
       {
         name: 'apple',
-        img: '../assets/apple.jpg',
+        img: appleImg,
         price: 2.50
       },
       {
         name: 'orange',
-        img: '../assets/orange.jpg',
+        img: orangeImg,
         price: 4
       },
       {
         name: 'pear',
-        img: '../assets/pear.jpg',
+        img: pearImg,
         price: 3.50
       },
       {
         name: 'strawberry',
-        img: '../assets/strawberry.jpg',
+        img: strawberryImg,
         price: 0.10
       },
     ],
     cart: {
-      products: {}
+      products: {
+      }
     }
   },
   mutations: {
@@ -36,14 +41,15 @@ export default new Vuex.Store({
       const dest = state.cart.products;
       const product = payload;
 
-      if (!dest[product]) dest[product] = 0;
+
+      if (!dest[product]) Vue.set(dest, product, 0);
       dest[product]++;
     },
     productDecrement: (state, payload) => {
       const dest = state.cart.products;
       const product = payload;
 
-      if (!dest[product]) dest[product] = 0;
+      if (!dest[product]) Vue.set(dest, product, 0);
       if (dest[product] === 1) delete dest[product];
       if (dest[product] > 0) dest[product]--;
     },
@@ -52,7 +58,7 @@ export default new Vuex.Store({
       const product = payload.product;
       const amount = payload.amount;
 
-      if (amount > 0) dest[product] = amount;
+      if (amount > 0) Vue.set(dest, product, amount);
       if (amount <= 0) delete dest[product];
     }
   },
