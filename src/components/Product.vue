@@ -59,22 +59,6 @@ export default {
     priceFixed() {
       // The price is taken from the product prop, but "beautified" here to have two decimals.
       return (Math.round((this.product.price) * 100) / 100).toFixed(2);
-    },
-    computedProductAmount: {
-      get() {
-        return parseInt(this.cart.products[this.product.name]) || 0;
-      },
-      set(input) {
-        let newAmount = parseInt(input);
-        if (isNaN(newAmount)) newAmount = 0;
-
-        this.$store.commit(
-            'productAmountByValue',
-            {
-              product: this.product.name,
-              amount: newAmount
-        })
-      }
     }
   },
   methods: {

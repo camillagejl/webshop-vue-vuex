@@ -41,7 +41,6 @@ export default new Vuex.Store({
       const dest = state.cart.products;
       const product = payload;
 
-
       if (!dest[product]) Vue.set(dest, product, 0);
       dest[product]++;
     },
@@ -49,9 +48,13 @@ export default new Vuex.Store({
       const dest = state.cart.products;
       const product = payload;
 
-      if (!dest[product]) Vue.set(dest, product, 0);
-      if (dest[product] === 1) delete dest[product];
-      if (dest[product] > 0) dest[product]--;
+      if (dest[product]) {
+        if (dest[product] === 1) {
+          dest[product]--;
+          delete dest[product];
+        }
+        if (dest[product] > 0) dest[product]--;
+      }
     },
     productAmountByValue: (state, payload) => {
       const dest = state.cart.products;
