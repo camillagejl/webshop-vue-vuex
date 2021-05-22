@@ -5,15 +5,22 @@
       Products
     </h1>
 
+    <button
+    @click="fetchProductsAsync"
+    >
+      Click me!
+    </button>
+
     <Products
         :products="products"
+        :noProductsFound="'Your cart is empty'"
     />
   </div>
 </template>
 
 <script>
 import Products from "../components/Products";
-import {mapState} from "vuex";
+import {mapState, mapActions} from "vuex";
 
 export default {
   name: 'ProductsView',
@@ -25,6 +32,11 @@ export default {
     ...mapState([
       'products'
     ]),
+  },
+  methods: {
+    ...mapActions([
+        'fetchProductsAsync'
+    ])
   }
 }
 </script>

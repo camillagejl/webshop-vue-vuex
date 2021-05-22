@@ -1,14 +1,72 @@
 <template>
   <div class="checkoutView">
+
     <h1>
       Checkout
     </h1>
+
+    <div v-if="!productsInCart || productsInCart.length > 0">
+      <table>
+        <tr>
+          <th>
+            Product
+          </th>
+          <th>
+            Amount
+          </th>
+          <th>
+            Price
+          </th>
+        </tr>
+
+        <ProductsListItem v-for="product in productsInCart"
+                          :product="product"
+                          :productAmount="cart.products[product.name] || 0"
+        />
+
+      </table>
+    </div>
+
+
+    <div
+        v-if="!productsInCart || productsInCart.length === 0"
+    >
+      Your cart is empty.
+    </div>
+
+    <div
+        v-if="productsInCart && productsInCart.length > 0"
+    >
+      <div class="totalAmount">
+        Total amount of products: {{ totalsInCart.amount }}
+      </div>
+      <div class="totalPrice">
+        Total price: {{ totalsInCart.price }} kr
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
+import {mapGetters, mapState} from "vuex";
+import ProductsListItem from "../components/ProductsListItem";
+
 export default {
-  name: "CheckoutView"
+  name: "CheckoutView",
+  components: {
+    ProductsListItem
+  },
+  computed: {
+    // mapState selects a specific part of the state.
+    ...mapState([
+      'cart'
+    ]),
+    ...mapGetters([
+      'productsInCart',
+      'totalsInCart'
+    ])
+  }
 }
 </script>
 

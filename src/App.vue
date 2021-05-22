@@ -43,7 +43,7 @@ code {
 
 
 html {
-  background-color: pink;
+  background-color: #c8ebdf;
 }
 
 .App {
@@ -64,7 +64,7 @@ h1 {
 /* NAVIGATION */
 
 nav {
-  background-color: #FEE6F7;
+  background-color: #bbe6d6;
   padding: 16px 0;
 }
 

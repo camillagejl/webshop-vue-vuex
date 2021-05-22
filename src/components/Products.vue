@@ -5,13 +5,14 @@
           :product="product"
           :productAmount="cart.products[product.name] || 0"
       />
-
-      <div
-      v-if="!products || products.length === 0"
-      >
-       No products
-      </div>
     </div>
+
+    <div
+        v-if="!products || products.length === 0"
+    >
+      {{ noProductsFound }}
+    </div>
+
   </div>
 </template>
 
@@ -25,7 +26,8 @@ export default {
     Product
   },
   props: {
-    products: Array
+    products: Array,
+    noProductsFound: String
   },
   computed: {
     // mapState selects a specific part of the state.
