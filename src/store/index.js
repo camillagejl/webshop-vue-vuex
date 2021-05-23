@@ -1,42 +1,27 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import appleImg from '../assets/apple.jpg';
-import orangeImg from '../assets/orange.jpg';
-import pearImg from '../assets/pear.jpg';
-import strawberryImg from '../assets/strawberry.jpg';
-import {fetchProducts} from "./productsAPI";
+import {fetchAPI} from "./productsAPI";
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        products: [
-            // {
-            //   name: 'apple',
-            //   img: appleImg,
-            //   price: 2.50
-            // },
-            // {
-            //   name: 'orange',
-            //   img: orangeImg,
-            //   price: 4
-            // },
-            // {
-            //   name: 'pear',
-            //   img: pearImg,
-            //   price: 3.50
-            // },
-            // {
-            //   name: 'strawberry',
-            //   img: strawberryImg,
-            //   price: 0.10
-            // },
-        ],
+        productsStatus: 'idle',
+        products: [],
         cart: {
             products: {}
         }
     },
     mutations: {
+        // Adding products to the products state
+        populateProducts: (state, payload) => {
+            state.products = payload;
+        },
+        changeStatus: (state, payload) => {
+            state.productsStatus = payload;
+        },
+
+        // Mutating cart product values
         productIncrement: (state, payload) => {
             const dest = state.cart.products;
             const product = payload;
@@ -63,21 +48,24 @@ export default new Vuex.Store({
 
             if (amount > 0) Vue.set(dest, product, amount);
             if (amount <= 0) delete dest[product];
-        },
-        populateProducts: (state, payload) => {
-            state.products = payload;
         }
     },
     actions: {
-        async fetchProductsAsync(context) {
+        fetchProducts(context) {
+            context.commit('changeStatus', 'loading');
+            fetchAPI()
+                .then(response => {
+                    console.log(response);
 
-                const response = await fetchProducts();
-                console.log(response);
+                    context.commit('populateProducts', response.data);
+                    context.commit('changeStatus', 'loaded');
+                })
+                .catch(error => {
+                    console.log('error', error);
+                    context.commit('changeStatus', 'failed');
+                });
 
-                context.commit('populateProducts', response.data);
-
-                return response.data;
-            }
+        }
     },
     modules: {},
     getters: {

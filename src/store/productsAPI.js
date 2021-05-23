@@ -7,7 +7,7 @@ import orangeImg from "../assets/orange.jpg";
 import pearImg from "../assets/pear.jpg";
 import strawberryImg from "../assets/strawberry.jpg";
 
-export function fetchProducts() {
+export function fetchAPI() {
 
     // Mock data for this web shop. This is the data that would normally be fetched from an external API.
     const productsData = [
@@ -38,7 +38,7 @@ export function fetchProducts() {
         setTimeout(() => {
 
             // This reject function can be used to test if the .rejected action runs properly at fail.
-            // reject();
+            // reject('reject test');
 
             resolve({data: productsData})
         }, 2000)

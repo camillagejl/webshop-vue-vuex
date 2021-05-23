@@ -5,22 +5,16 @@
       Products
     </h1>
 
-    <button
-    @click="fetchProductsAsync"
-    >
-      Click me!
-    </button>
-
     <Products
         :products="products"
-        :noProductsFound="'Your cart is empty'"
+        :noProductsFound="noProductsFound"
     />
   </div>
 </template>
 
 <script>
 import Products from "../components/Products";
-import {mapState, mapActions} from "vuex";
+import {mapState} from "vuex";
 
 export default {
   name: 'ProductsView',
@@ -30,13 +24,25 @@ export default {
   computed: {
     // mapState selects a specific part of the state.
     ...mapState([
-      'products'
+      'products',
+      'productsStatus'
     ]),
-  },
-  methods: {
-    ...mapActions([
-        'fetchProductsAsync'
-    ])
+    noProductsFound() {
+      let statusMessage = 'No products to display.';
+
+      // When the productsStatus changes, the message on the page changes with it.
+      if (this.productsStatus === 'loading') {
+        statusMessage = 'Loading products...';
+      }
+      else if (this.productsStatus === 'failed') {
+        statusMessage = 'Sorry, there was a problem loading the products.';
+      }
+      else {
+        statusMessage = 'No products to display.';
+      }
+
+      return statusMessage;
+    }
   }
 }
 </script>

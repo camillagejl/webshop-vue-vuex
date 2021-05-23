@@ -26,6 +26,21 @@
   </div>
 </template>
 
+<script>
+import {mapActions} from "vuex";
+
+export default {
+  methods: {
+    ...mapActions([
+      'fetchProducts'
+    ]),
+  },
+  mounted() {
+    this.fetchProducts();
+  }
+}
+</script>
+
 <style lang="scss">
 body {
   margin: 0;

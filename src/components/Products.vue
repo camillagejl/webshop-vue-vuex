@@ -1,10 +1,16 @@
 <template>
-  <div class="products">
-    <div v-for="product in products">
-      <Product
-          :product="product"
-          :productAmount="cart.products[product.name] || 0"
-      />
+  <div>
+    <div
+        v-if="products.length !== 0"
+        class="products"
+    >
+      <div v-for="product in products">
+        <Product
+            :product="product"
+            :productAmount="cart.products[product.name] || 0"
+        />
+      </div>
+
     </div>
 
     <div
