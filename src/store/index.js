@@ -17,6 +17,8 @@ export default new Vuex.Store({
         populateProducts: (state, payload) => {
             state.products = payload;
         },
+
+        // Changes the productsStatus, so that we can display the relevant status message in productsView.
         changeStatus: (state, payload) => {
             state.productsStatus = payload;
         },
@@ -53,6 +55,8 @@ export default new Vuex.Store({
     actions: {
         fetchProducts(context) {
             context.commit('changeStatus', 'loading');
+
+            // Fetches data from the API. As the API returns a promise, this function is async.
             fetchAPI()
                 .then(response => {
                     console.log(response);
@@ -67,7 +71,6 @@ export default new Vuex.Store({
 
         }
     },
-    modules: {},
     getters: {
         productsInCart(state, getters) {
             const products = [];
