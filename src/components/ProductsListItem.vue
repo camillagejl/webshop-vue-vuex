@@ -24,4 +24,13 @@ export default {
 
 <style scoped>
 
+th,
+td {
+  min-width: 150px;
+  text-align: left;
+  padding: 8px;
+  margin: 10px;
+  border: 1px solid lightgrey;
+}
+
 </style>

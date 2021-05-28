@@ -32,11 +32,11 @@ import {mapActions} from "vuex";
 export default {
   methods: {
     ...mapActions([
-      'fetchProducts'
+      'fetchProductsAsync'
     ]),
   },
   mounted() {
-    this.fetchProducts();
+    this.fetchProductsAsync();
   }
 }
 </script>
@@ -64,7 +64,7 @@ html {
 .App {
   background-color: #F5F5F5;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 32px auto;
   padding: 32px;
 }
 

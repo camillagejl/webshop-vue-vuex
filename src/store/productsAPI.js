@@ -7,7 +7,7 @@ import orangeImg from "../assets/orange.jpg";
 import pearImg from "../assets/pear.jpg";
 import strawberryImg from "../assets/strawberry.jpg";
 
-export function fetchAPI() {
+export function fetchProducts() {
 
     // Mock data for this web shop. This is the data that would normally be fetched from an external API.
     const productsData = [

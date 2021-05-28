@@ -7,22 +7,26 @@
 
     <div v-if="!productsInCart || productsInCart.length > 0">
       <table>
-        <tr>
-          <th>
-            Product
-          </th>
-          <th>
-            Amount
-          </th>
-          <th>
-            Price
-          </th>
-        </tr>
+        <thead>
+          <tr>
+            <th>
+              Product
+            </th>
+            <th>
+              Amount
+            </th>
+            <th>
+              Price
+            </th>
+          </tr>
+        </thead>
 
-        <ProductsListItem v-for="product in productsInCart"
-                          :product="product"
-                          :productAmount="cart.products[product.name] || 0"
-        />
+        <tbody>
+          <ProductsListItem v-for="product in productsInCart"
+                            :product="product"
+                            :productAmount="cart.products[product.name] || 0"
+          />
+        </tbody>
 
       </table>
     </div>
@@ -73,6 +77,7 @@ export default {
 <style scoped>
 table {
   border-collapse: collapse;
+  border: 1px solid lightgrey;
 }
 
 th,
@@ -84,7 +89,11 @@ td {
   border: 1px solid lightgrey;
 }
 
-tr:nth-child(odd) {
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+thead tr {
   background-color: #dddddd;
 }
 

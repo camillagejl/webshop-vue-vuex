@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {fetchAPI} from "./productsAPI";
+import {fetchProducts} from "./productsAPI";
 
 Vue.use(Vuex)
 
@@ -53,35 +53,38 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        fetchProducts(context) {
+        fetchProductsAsync(context) {
+            // When the function is first called, it changes the productsStatus to loading.
             context.commit('changeStatus', 'loading');
 
             // Fetches data from the API. As the API returns a promise, this function is async.
-            fetchAPI()
+            fetchProducts()
+
+                // If the data is fetched successfully:
                 .then(response => {
-                    console.log(response);
 
                     context.commit('populateProducts', response.data);
                     context.commit('changeStatus', 'loaded');
                 })
+
+                // If an error occurs:
                 .catch(error => {
-                    console.log('error', error);
                     context.commit('changeStatus', 'failed');
                 });
-
         }
     },
     getters: {
         productsInCart(state, getters) {
             const products = [];
 
+            // Loops over all products in the cart
             for (const [cartProduct, amount] of Object.entries(state.cart.products)) {
 
-                // Loops over all products to find the the product information.
+                // Loops over all products in store to find the the product information for the products in cart.
                 state.products.forEach(product => {
                     if (product.name === cartProduct) {
 
-                        // Adds to products array with the information for each product in the cart.
+                        // If a product is in the cart, the information about the product is added to the array.
                         products.push(product);
                     }
                 })
